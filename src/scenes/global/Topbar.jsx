@@ -1,5 +1,6 @@
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { ColorModeContext, tokens } from "../../theme";
 import InputBase from "@mui/material/InputBase";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -43,9 +44,15 @@ const Topbar = () => {
         <IconButton>
           <SettingsOutlinedIcon />
         </IconButton>
-        <IconButton>
-          <PersonOutlinedIcon />
-        </IconButton>
+        <Box>
+          <IconButton
+            component={Link}
+            to="/login">
+            <PersonOutlinedIcon />
+
+          </IconButton>
+        </Box>
+
       </Box>
     </Box>
   );

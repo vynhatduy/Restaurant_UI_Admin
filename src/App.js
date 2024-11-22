@@ -17,6 +17,8 @@ import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Menu from "./scenes/Menu";
 import Addproduct from "../src/scenes/addproduct/AddProduct"
+import Login from "./scenes/account";
+
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -43,6 +45,7 @@ function App() {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/geography" element={<Geography />} />
+              <Route path="/login" element={<Login />} />
             </Routes>
           </main>
         </div>
