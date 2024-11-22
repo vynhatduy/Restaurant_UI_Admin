@@ -107,10 +107,10 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  ManChil Garden
+                  ManChill Garden
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Name Admin
+                  Name Admins
                 </Typography>
               </Box>
             </Box>
@@ -146,20 +146,21 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+              <Item
+              title="Menu"
+              to="/Menu"
+              icon={<ReceiptOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            {/* <Item
               title="Invoices Balances"
               to="/invoices"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
-            <Item
-              title="Menu"
-              to="/invoices"
-              icon={<MenuOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            /> */}
+          
 
             <Typography
               variant="h6"
