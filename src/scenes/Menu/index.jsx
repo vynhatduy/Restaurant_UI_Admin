@@ -1,81 +1,117 @@
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Button, useTheme } from "@mui/material";
-// import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-import { mockDataInvoices } from "../../data/mockData";
-import Header from "../../components/Header";
 import { Link } from "react-router-dom";
-import "react-pro-sidebar/dist/css/styles.css";
+import Header from "../../components/Header";
+import axios from "axios";
+import { tokens } from "../../theme";
 
 const Menu = () => {
   const theme = useTheme();
+  const [rows, setRows] = useState([]);
   const colors = tokens(theme.palette.mode);
+
+  // Fetch dữ liệu từ API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://103.153.68.148/api/MonAn/all/food"); // Đổi URL API theo đúng endpoint
+        const data = response.data.map((item, index) => ({
+          id: index + 1, // ID dùng cho DataGrid
+          maMonAn: item.maMonAn,
+          tenMon: item.tenMon,
+          gia: item.gia,
+          moTa: item.moTa,
+          hinhAnh: item.hinhAnh.split(";"), // Chia các URL hình ảnh thành mảng
+          maNhomMonAn:
+            item.maNhomMonAn === "NMA001"
+              ? "Bữa sáng"
+              : item.maNhomMonAn === "NMA002"
+              ? "Bữa trưa"
+              : "Bữa tối",
+        }));
+        setRows(data);
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const columns = [
     {
-      field: "id",
-      headerName: "Mã Món Ăn"
-    },
-    {
-      field: "name",
-      headerName: "Tên món ăn",
+      field: "maMonAn",
+      headerName: "Mã Món Ăn",
       flex: 1,
-      cellClassName: "name-column--cell",
+      sortable: true,
     },
     {
-      field: "phone",
-      headerName: "Giá",
+      field: "tenMon",
+      headerName: "Tên Món Ăn",
       flex: 1,
-      renderCell: (params) => (
-        <Typography color={colors.greenAccent[500]}>
-          {params.row.phone} đ
-        </Typography>
-      ),
+      sortable: true,
     },
     {
-      field: "email",
-      headerName: "Mô tả",
-      flex: 1,
-    },
-    {
-      field: "cost",
-      headerName: "Mã nhóm món ăn",
+      field: "gia",
+      headerName: "Giá (đ)",
       flex: 1,
       renderCell: (params) => (
-        <Typography color={colors.greenAccent[500]}>
-          {params.row.cost}
-        </Typography>
+        <Typography color={colors.greenAccent[500]}>{params.row.gia} đ</Typography>
       ),
+      sortable: true,
     },
     {
-      field: "date",
-      headerName: "Hình ảnh",
+      field: "moTa",
+      headerName: "Mô Tả",
       flex: 1,
+      sortable: true,
+    },
+    {
+      field: "maNhomMonAn",
+      headerName: "Loại Món Ăn",
+      flex: 1,
+    },
+    {
+      field: "hinhAnh",
+      headerName: "Hình Ảnh",
+      flex: 2,
+      renderCell: (params) => (
+        <Box display="flex" gap={1}>
+          {params.row.hinhAnh.map((url, index) => (
+            <img
+              key={index}
+              src={url}
+              alt={`Ảnh ${params.row.tenMon}`}
+              style={{ width: 50, height: 50, objectFit: "cover", borderRadius: "5px" }}
+            />
+          ))}
+        </Box>
+      ),
     },
   ];
 
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Menu" subtitle="list Menu of ManchilGarden" />
-        <Box >
-          <Button
-            component={Link}
-            to="/AddProduct"
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}>
-            {/* <Link to = "/AddProduct"></Link> */}
-            Add Product
-          </Button>
-        </Box>
+        <Header title="Menu" subtitle="Danh sách món ăn của ManchilGarden" />
+        <Button
+          component={Link}
+          to="/AddProduct"
+          sx={{
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+            fontSize: "14px",
+            fontWeight: "bold",
+            padding: "10px 20px",
+          }}
+        >
+          Thêm Món Ăn
+        </Button>
       </Box>
 
       <Box
-        m="40px 0 0 0"
+        mt="40px"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
@@ -83,9 +119,6 @@ const Menu = () => {
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
-          },
-          "& .name-column--cell": {
-            color: colors.greenAccent[300],
           },
           "& .MuiDataGrid-columnHeaders": {
             backgroundColor: colors.blueAccent[700],
@@ -103,7 +136,13 @@ const Menu = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataInvoices} columns={columns} />
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          checkboxSelection
+          disableSelectionOnClick
+        />
       </Box>
     </Box>
   );
