@@ -1,0 +1,11 @@
+[build]
+  # Chỉ định các lệnh để cài đặt và build dự án
+  command = "npm install --legacy-peer-deps && npm run build"  # Cài đặt các phụ thuộc với --legacy-peer-deps và build lại dự án
+  publish = "build"  # Đảm bảo thư mục output chính xác, ví dụ: 'build' hoặc 'dist'
+
+[[redirects]]
+  # Redirect từ mọi yêu cầu đến build của bạn
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
