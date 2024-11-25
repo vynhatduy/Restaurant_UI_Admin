@@ -4,7 +4,6 @@ import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Team from "./scenes/team";
-import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Bar from "./scenes/bar";
 import Form from "./scenes/form";
@@ -18,7 +17,7 @@ import Calendar from "./scenes/calendar/calendar";
 import Menu from "./scenes/Menu";
 import Addproduct from "../src/scenes/addproduct/AddProduct"
 import Login from "./scenes/account";
-
+import TableMn from "./scenes/table";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -35,7 +34,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
-              <Route path="/invoices" element={<Invoices />} />
+              <Route path="/TableMn" element={<TableMn />} />
               <Route path="/Menu" element={<Menu />}/>
               <Route path="/AddProduct" element={<Addproduct />} />
               <Route path="/form" element={<Form />} />

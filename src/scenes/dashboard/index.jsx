@@ -40,7 +40,7 @@ const Dashboard = () => {
       </Box>
 
       {/* GRID & CHARTS */}
-      <Box display="grid"gridTemplateColumns="repeat(12, 1fr)"gap="20px">
+      <Box display="grid"gridTemplateColumns="repeat(12, 1fr)"gap="10px">
         {/* ROW 1 */}
         <Box gridColumn="span 3" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
           <StatBox title="12,361" subtitle="Emails Sent" progress="0.75" increase="+14%" icon={

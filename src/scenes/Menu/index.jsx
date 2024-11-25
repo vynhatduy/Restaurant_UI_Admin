@@ -1,10 +1,9 @@
 import { Box, Typography, Button, useTheme } from "@mui/material";
-// import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
-import { Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 
 const Menu = () => {
@@ -13,7 +12,7 @@ const Menu = () => {
   const columns = [
     {
       field: "id",
-      headerName: "Mã Món Ăn"
+      headerName: "Mã Món Ăn",
     },
     {
       field: "name",
@@ -56,11 +55,11 @@ const Menu = () => {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Menu" subtitle="list Menu of ManchilGarden" />
+        <Header title="Menu"  subtitle="list Menu of ManchilGarden" />
         <Box >
           <Button
-            component={Link}
-            to="/AddProduct"
+          component={Link}
+            to ="/AddProduct"
             sx={{
               backgroundColor: colors.blueAccent[700],
               color: colors.grey[100],
@@ -68,7 +67,6 @@ const Menu = () => {
               fontWeight: "bold",
               padding: "10px 20px",
             }}>
-            {/* <Link to = "/AddProduct"></Link> */}
             Add Product
           </Button>
         </Box>

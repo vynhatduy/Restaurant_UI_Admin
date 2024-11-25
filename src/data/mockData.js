@@ -1,6 +1,22 @@
-import { Discount } from "@mui/icons-material";
 import { tokens } from "../theme";
 
+export const mockDataTable = [
+  {
+    soBan: "B001",
+    soChoNgoi: 5,
+    hinhAnh: "https://res.cloudinary.com/dblfbqh8t/image/upload/v1732316066/manchillgraden/ffabbbcf-f461-4a33-9dc9-0b25731a55bd_6.png.jpg",
+    maKhuVuc: "KV001"
+  },
+  {
+    soBan: "B002",
+    soChoNgoi: 6,
+    hinhAnh: "https://res.cloudinary.com/dblfbqh8t/image/upload/v1732316110/manchillgraden/bb92f06b-76f7-4154-8b10-37a2af7fc0a0_7.png.jpg",
+    maKhuVuc: "KV001"
+  },
+  
+];
+
+3
 export const mockDataTeam = [
   {
     id: 1,

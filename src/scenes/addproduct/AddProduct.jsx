@@ -1,17 +1,29 @@
 import React, { useState } from "react";
-import { Box, TextField, Button, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 
 const AddProduct = () => {
   const [formValues, setFormValues] = useState({
     id: "",
     name: "",
-    phone: "",
-    email: "",
-    cost: "",
-    date: "", // Lưu tệp hình ảnh sau khi chọn
+    price: "",
+    description: "",
+    groupId: "",
+    images: [],
   });
 
-  const [productList, setProductList] = useState([]); // Mảng lưu danh sách sản phẩm
+  const [productList, setProductList] = useState([]);
 
   // Hàm xử lý thay đổi dữ liệu trong form
   const handleInputChange = (e) => {
@@ -19,25 +31,23 @@ const AddProduct = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  // Hàm xử lý khi người dùng chọn file ảnh
+  // Hàm xử lý khi chọn file
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormValues({ ...formValues, date: file ? file.name : "" });
+    const files = Array.from(e.target.files);
+    setFormValues({ ...formValues, images: files });
   };
 
   // Hàm xử lý gửi form
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Thêm sản phẩm vào danh sách
     setProductList([...productList, formValues]);
-    // Reset form sau khi submit
     setFormValues({
       id: "",
       name: "",
-      phone: "",
-      email: "",
-      cost: "",
-      date: "",
+      price: "",
+      description: "",
+      groupId: "",
+      images: [],
     });
   };
 
@@ -60,7 +70,6 @@ const AddProduct = () => {
         Add Product
       </Typography>
 
-      {/* Mã Món Ăn */}
       <TextField
         label="Mã Món Ăn"
         name="id"
@@ -68,8 +77,6 @@ const AddProduct = () => {
         onChange={handleInputChange}
         required
       />
-
-      {/* Tên Món Ăn */}
       <TextField
         label="Tên Món Ăn"
         name="name"
@@ -77,51 +84,38 @@ const AddProduct = () => {
         onChange={handleInputChange}
         required
       />
-
-      {/* Giá */}
       <TextField
         label="Giá (VNĐ)"
-        name="phone"
-        value={formValues.phone}
+        name="price"
+        value={formValues.price}
         onChange={handleInputChange}
         type="number"
         required
       />
-
-      {/* Mô Tả */}
       <TextField
         label="Mô Tả"
-        name="email"
-        value={formValues.email}
+        name="description"
+        value={formValues.description}
         onChange={handleInputChange}
         multiline
         rows={4}
         required
       />
-
-      {/* Mã Nhóm Món Ăn */}
       <TextField
         label="Mã Nhóm Món Ăn"
-        name="cost"
-        value={formValues.cost}
+        name="groupId"
+        value={formValues.groupId}
         onChange={handleInputChange}
         required
       />
-
-      {/* Hình Ảnh */}
-      <TextField
-                type="file"
-                name="date"
-                value={formValues.date}
-                onChange={handleInputChange}
-                required
-                inputProps={{
-                    accept: "image/*", // Chỉ cho phép tệp ảnh
-                    multiple: true,    // Cho phép chọn nhiều tệp
-                }}
-            />
-
-      {/* Nút Submit */}
+      <input
+        type="file"
+        name="images"
+        multiple
+        onChange={handleFileChange}
+        accept="image/*"
+        style={{ marginTop: 10 }}
+      />
       <Button
         type="submit"
         variant="contained"
@@ -131,7 +125,6 @@ const AddProduct = () => {
         Thêm Món Ăn
       </Button>
 
-      {/* Hiển thị danh sách sản phẩm đã thêm */}
       <TableContainer component={Paper} sx={{ marginTop: 3 }}>
         <Table>
           <TableHead>
@@ -149,10 +142,14 @@ const AddProduct = () => {
               <TableRow key={index}>
                 <TableCell>{product.id}</TableCell>
                 <TableCell>{product.name}</TableCell>
-                <TableCell>{product.phone}</TableCell>
-                <TableCell>{product.email}</TableCell>
-                <TableCell>{product.cost}</TableCell>
-                <TableCell>{product.date}</TableCell>
+                <TableCell>{product.price}</TableCell>
+                <TableCell>{product.description}</TableCell>
+                <TableCell>{product.groupId}</TableCell>
+                <TableCell>
+                  {product.images.map((file, idx) => (
+                    <Typography key={idx}>{file.name}</Typography>
+                  ))}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
