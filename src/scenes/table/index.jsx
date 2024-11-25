@@ -1,37 +1,75 @@
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import { DataGrid,GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTable } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
 const TableMn = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  // State lưu dữ liệu từ API
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Gọi API lấy dữ liệu
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://103.153.68.148/api/Ban/all", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) throw new Error("Failed to fetch data");
+        const data = await response.json();
+        setRows(data); // Lưu dữ liệu vào state
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Kết thúc loading
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Định nghĩa cột
   const columns = [
-   {
-    Field: "soBan",
-    headerName: "Số bàn",
-   },
-
-   {
-    Field: "soChoNgoi",
-    headerName: "Số chỗ ngồi",
-   },
-   {
-    Field: "hinhAnh",
-    headerName: "Số bàn",
-   },
-
-   {
-    Field: "maKhuVuc",
-    headerName: "Số chỗ ngồi",
-   },
+    {
+      field: "soBan",
+      headerName: "Số Bàn",
+      flex: 1,
+    },
+    {
+      field: "soChoNgoi",
+      headerName: "Số Chỗ Ngồi",
+      flex: 1,
+    },
+    {
+      field: "hinhAnh",
+      headerName: "Hình Ảnh",
+      flex: 2,
+      renderCell: (params) => (
+        <img
+          src={params.value}
+          alt="Hình bàn"
+          style={{ width: "50px", height: "50px", borderRadius: "5px" }}
+        />
+      ),
+    },
+    {
+      field: "maKhuVuc",
+      headerName: "Mã Khu Vực",
+      flex: 1,
+    },
   ];
 
   return (
     <Box m="20px">
-      <Header title="Table Manage" subtitle="List Table" />
+      <Header title="Table Manage" subtitle="Danh sách bàn" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -61,9 +99,14 @@ const TableMn = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTable} 
-        columns={columns}
-        components={{ Toolbar: GridToolbar }} />
+        <DataGrid
+          loading={loading}
+          rows={rows}
+          columns={columns}
+          components={{ Toolbar: GridToolbar }}
+          checkboxSelection
+          getRowId={(row) => row.maBan} // Đặt ID cho từng hàng
+        />
       </Box>
     </Box>
   );
