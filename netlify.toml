@@ -1,9 +1,0 @@
-[build]
-  command = "npm install --force && npm run build"
-  publish = "build"  # Hoặc thư mục phù hợp với ứng dụng của bạn
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = true
