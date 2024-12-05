@@ -59,5 +59,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "1. Build Docker Image\r Tạo một Docker image từ Dockerfile:`docker build -t restaurant_admin_ui .`\r - -t: Gán tên cho Docker image (ở đây là restaurant_admin_ui).\r - .: Chỉ định ngữ cảnh build, trong trường hợp này là thư mục hiện tại.\r 2. Kiểm tra Docker Image đã tạo\r Liệt kê tất cả các Docker images hiện có:`docker images`\r 3. Chạy Docker Container\r Khởi chạy một container từ image vừa tạo:`docker run -p 3000:3000 restaurant_admin_ui`\r - -p 3000:3000: Liên kết cổng 3000 trên máy host với cổng 3000 trong container.\r - restaurant_admin_ui: Tên image được sử dụng để chạy.\r 4. Liệt kê các Container đang chạy\r Xem danh sách các container đang hoạt động:`docker ps`\r Xem toàn bộ container (kể cả đã dừng):`docker ps -a`\r 5. Dừng Container\r Dừng một container đang chạy:`docker stop <CONTAINER_ID>`\r - <CONTAINER_ID>: ID hoặc tên của container (lấy từ lệnh docker ps).\r 6. Xóa Container\r Xóa container không còn cần thiết:`docker rm <CONTAINER_ID>`\r 7. Xóa Docker Image\r Xóa Docker image nếu không cần:`docker rmi restaurant_admin_ui`\r 8. Sử dụng Docker Compose (Nếu có)\r Nếu đã tạo file docker-compose.yml, bạn có thể thực thi các lệnh sau:",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vynhatduy/Restaurant_UI_Admin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vynhatduy/Restaurant_UI_Admin/issues"
+  },
+  "homepage": "https://github.com/vynhatduy/Restaurant_UI_Admin#readme"
 }
